@@ -45,10 +45,7 @@ jobs:
         id: pack
         if: matrix.collect-packages
         env:
-          CiBuildVersionSuffix: >
-            ${{ github.event_name == 'push' && env.CiRunPushSuffix ||
-                github.event_name == 'pull_request' && env.CiRunPullSuffix ||
-                null }}
+          CiBuildVersionSuffix: ${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }}
         run: dotnet pack --no-build --configuration ${{ matrix.configuration }}
 
       - name: Collect packages
