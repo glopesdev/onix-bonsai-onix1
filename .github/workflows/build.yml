@@ -47,7 +47,7 @@ jobs:
         env:
           CiBuildVersionSuffix: >
             ${{ github.event_name == 'push' && env.CiRunPushSuffix ||
-                github.event_name == 'pull_request' && env.CiRunPushSuffix ||
+                github.event_name == 'pull_request' && env.CiRunPullSuffix ||
                 null }}
         run: dotnet pack --no-build --configuration ${{ matrix.configuration }}
 
