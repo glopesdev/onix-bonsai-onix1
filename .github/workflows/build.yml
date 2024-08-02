@@ -18,7 +18,11 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      build_suffix: ${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }}
+      build-suffix: ${{ steps.setup-build.outputs.build-suffix }}
+    steps:
+      - name: Setup Build
+        id: setup-build
+        run: echo "build-suffix=${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }} >> "$GITHUB_OUTPUT"
 
   build:
     needs: [setup]
@@ -33,7 +37,7 @@ jobs:
             collect-packages: true
     runs-on: ${{ matrix.os }}
     env:
-      CiBuildVersionSuffix: ${{ needs.setup.outputs.build_suffix }}
+      CiBuildVersionSuffix: ${{ needs.setup.outputs.build-suffix }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
