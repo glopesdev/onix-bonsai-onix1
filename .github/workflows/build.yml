@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Setup Build
         id: setup-build
-        run: echo "build-suffix=${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }} >> "$GITHUB_OUTPUT"
+        run: echo "build-suffix=${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }}" >> "$GITHUB_OUTPUT"
 
   build:
     needs: [setup]
