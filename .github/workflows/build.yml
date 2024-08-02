@@ -26,8 +26,6 @@ jobs:
             configuration: release
             collect-packages: true
     runs-on: ${{ matrix.os }}
-    env:
-      CiBuildVersionSuffix: ${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,6 +34,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.x
+
+      - name: Setup Build
+        run: >
+          echo "CiBuildVersionSuffix=${{ github.event_name == 'push' && env.CiRunPushSuffix || github.event_name == 'pull_request' && env.CiRunPullSuffix || null }}"
+          >> $GITHUB_ENV
       
       - name: Restore
         run: dotnet restore
