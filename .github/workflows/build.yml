@@ -72,7 +72,7 @@ jobs:
     permissions:
       packages: write
     needs: [build]
-    if: github.event_name == 'push' || github.event_name == 'release'
+    if: always() && github.event_name == 'push' || github.event_name == 'release'
     steps:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
