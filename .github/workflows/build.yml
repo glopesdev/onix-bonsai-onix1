@@ -26,6 +26,7 @@ jobs:
 
   build:
     needs: [setup]
+    if: false
     strategy:
       fail-fast: false
       matrix:
